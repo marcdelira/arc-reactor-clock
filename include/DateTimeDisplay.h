@@ -2,7 +2,9 @@
 #define DATETIMEDISPLAY_H
 
 #include <TM1637Display.h>
-#include <Arduino.h>
+#include <NTPClient.h>
+#include <WiFiUdp.h>
+#include <ESP8266WiFi.h>
 
 void initDateTime();
 void handleDateTimeDisplay();
