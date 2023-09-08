@@ -35,21 +35,20 @@ void handleDateTimeDisplay() {
   static long dtInstant = 0;
   int hour, minute;
   uint8_t colon = 0b01000000;
-  static bool showColon = false;
+  // static bool showColon = false;
 
-  timeClient.update();
-  hour = timeClient.getHours();
-  minute = timeClient.getMinutes();
-
-  if (millis() - dtInstant >= WAIT_COLON || dtInstant == 0) {
-    showColon = !showColon;
-
-    colon = (showColon? 0b01000000 : 0b00000000);
+  if (millis() - dtInstant >= WAIT_CLOCK || dtInstant == 0) {
+    // showColon = !showColon;
+    // colon = (showColon? 0b01000000 : 0b00000000);
+    
+    timeClient.update();
+    hour = timeClient.getHours();
+    minute = timeClient.getMinutes();
 
     display.showNumberDecEx(hour, colon, true, 2, 0);
     display.showNumberDecEx(minute, colon, true, 2, 2);
     
     dtInstant = millis();
-  }
     // Serial.println(timeClient.getFormattedTime()); 
+  }
 }
