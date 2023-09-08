@@ -8,14 +8,14 @@ void setup(){
 }
 
 void loop() {
-  // static long mudar = 0;
+  static long mudar = 0;
 
   handleDateTimeDisplay();
   handleLedRing();
 
-  // if (millis() - mudar >= 5000) {
-  //   Serial.println("mudar...");
-  //   mudaEfeito();
-  //   mudar = millis();
-  // }
+  if (millis() - mudar >= 5000) {
+    //Serial.println("mudar...");
+    mudaEfeito();
+    mudar = millis();
+  }
 }
