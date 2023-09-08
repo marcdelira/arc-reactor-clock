@@ -15,14 +15,20 @@ NTPClient timeClient(ntpUDP, timeOffset);
 
 TM1637Display display(CLK, DIO);
 
+const uint8_t SEG_ERRO[] = {
+	SEG_A | SEG_F | SEG_G | SEG_E | SEG_D,           // E
+	SEG_E | SEG_G,                                   // r
+	SEG_E | SEG_G,                                   // r
+	SEG_A | SEG_B | SEG_C | SEG_D | SEG_E | SEG_F    // O
+	};
+
 void initDateTime() {
   Serial.begin(115200);
 
-  WiFi.begin(ssid, password);
+  // WiFi.begin(ssid, password);
 
   while ( WiFi.status() != WL_CONNECTED ) {
-    delay ( 500 );
-    Serial.print ( "." );
+    display.setSegments(SEG_ERRO);
   }
 
   timeClient.begin();

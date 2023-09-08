@@ -3,8 +3,9 @@
 Adafruit_NeoPixel pixels = Adafruit_NeoPixel();
 
 void setup(){
-  initDateTime();
   initNeopixel(&pixels);
+  initNetworkService();
+  initDateTime();
 }
 
 void loop() {
