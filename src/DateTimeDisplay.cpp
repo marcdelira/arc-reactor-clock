@@ -5,9 +5,6 @@
 #define WAIT_CLOCK 1000
 #define WAIT_COLON 500
 
-const char *ssid     = "brisa-3186667";
-const char *password = "btn8zqi7";
-
 long timeOffset = -10800;
 
 WiFiUDP ntpUDP;
@@ -25,14 +22,11 @@ const uint8_t SEG_ERRO[] = {
 void initDateTime() {
   Serial.begin(115200);
 
-  // WiFi.begin(ssid, password);
-
   while ( WiFi.status() != WL_CONNECTED ) {
     display.setSegments(SEG_ERRO);
   }
 
   timeClient.begin();
-
   display.setBrightness(2);
 }
 
