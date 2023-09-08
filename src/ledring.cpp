@@ -33,7 +33,7 @@ void colorWipe(uint32_t color32, boolean isDelay) {
     ledRing->setPixelColor(i, color32);
     ledRing->show();
     if (isDelay)
-      delay(3); //Intervalo para a execução de cada comando para cada LED 
+      delay(50); //Intervalo para a execução de cada comando para cada LED 
   }
 }
 
@@ -101,11 +101,11 @@ void efeitoConectando() {
   uint32_t color32;
   static bool acende = true;
   static ulong timeSave = 0;
-  uint espera = 100;
+  uint espera = 20;
   static u_char index = 0;
 
   if (acende) {
-    color32 = ledRing->Color(50, 50, 50);
+    color32 = ledRing->Color(15, 15, 255);
    } else {
      color32 = ledRing->Color(0, 0, 0);
   }
@@ -169,7 +169,10 @@ void handleLedRing() {
   
   switch (efeitoSelecionado) {
     case 0:
-      desligaLedRing();
+      // desligaLedRing();
+      colorWipe(ledRing->Color(0, 0, 255), true);
+      colorWipe(ledRing->Color(255, 0, 0), true);
+      colorWipe(ledRing->Color(0, 255, 0), true);
       break;
     case 1:
       efeitoConectando();

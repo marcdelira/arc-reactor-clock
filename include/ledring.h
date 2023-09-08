@@ -4,7 +4,7 @@
   #include <Adafruit_NeoPixel.h>
 
   #define PIN 5
-  #define NUMPIXEL 16
+  #define NUMPIXEL 35
 
   #define EFEITO_CONECTANDO 1
   #define EFEITO_HEART_BEAT 2
