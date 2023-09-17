@@ -7,6 +7,8 @@
 #include <ESP8266WiFi.h>
 
 void initDateTime();
+void showDateTime();
 void handleDateTimeDisplay();
+void display_cuckoo();
 
 #endif //DATETIMEDISPLAY_H
