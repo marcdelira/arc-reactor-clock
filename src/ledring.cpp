@@ -9,6 +9,18 @@ static int efeitoSelecionado = 0;
 bool habilitaEfeitoConectando = false;
 bool habilitaEfeitoHeartBeat = false;
 
+void efeitoStart(boolean wifiConnection) {
+  uint32_t colorLed = 0;
+
+  colorLed = (wifiConnection ? ledRing->Color(0, 20, 255) : ledRing->Color(255, 20, 0));
+
+  for(int i=0; i<35;i++){
+    ledRing->setPixelColor(i, colorLed);
+    ledRing->show();
+    delay(40);
+  }
+}
+
 void initNeopixel(Adafruit_NeoPixel* neoPixel) {
   ledRing = neoPixel;
   ledRing->setPin(PIN);
@@ -18,6 +30,8 @@ void initNeopixel(Adafruit_NeoPixel* neoPixel) {
   ledRing->clear();
   //ledRing->setPixelColor(0, ledRing->Color(0, 0, 150));
   ledRing->show();
+
+  efeitoStart(false);
 }
 
 void mudaEfeito() {

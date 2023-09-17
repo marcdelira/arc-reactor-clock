@@ -19,6 +19,7 @@
   void handleLedRing();
   void mudaEfeito();
   void rainbowCycle(uint8_t wait);
+  void efeitoStart(boolean wifiConnection);
   //void pulse();
 
 
