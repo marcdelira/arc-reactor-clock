@@ -1,8 +1,9 @@
 #include "main.h"
 #include <ESP8266mDNS.h>
 
-#define BLUE_LED1 4
-#define BLUE_LED2 2
+#define BLUE_LED1 13
+#define BLUE_LED2 15
+#define BT_RESET 0
 
 Adafruit_NeoPixel pixels = Adafruit_NeoPixel();
 
@@ -10,13 +11,15 @@ ESP8266WebServer server(80);
 
 void initBlueLeds();
 void startBlueLeds();
+void read_keyb();
 
 void setup(){
   Serial.begin(115200);
-  
-  // initNeopixel(&pixels);
-  initNetworkService();
+  pinMode(BT_RESET, INPUT_PULLUP);
+  initNeopixel(&pixels);
   initDateTime();
+  
+  initNetworkService();
 
   if (!MDNS.begin("wemos")) {
     Serial.println("Erro na configuração do MDNS");
@@ -34,29 +37,11 @@ void setup(){
       F("Welcome to the Rest Web Server!"));
     });
   
-  Serial.println("Sending mDNS query");
-  int n = MDNS.queryService("http", "tcp");  // Send out query for esp tcp services
-  Serial.println("mDNS query done");
-  if (n == 0) {
-    Serial.println("no services found");
-  } else {
-    Serial.print(n);
-    Serial.println(" service(s) found");
-    for (int i = 0; i < n; ++i) {
-      // Print details for each service found
-      Serial.print(i + 1);
-      Serial.print(": ");
-      Serial.print(MDNS.hostname(i));
-      Serial.print(" (");
-      Serial.print(MDNS.IP(i));
-      Serial.print(":");
-      Serial.print(MDNS.port(i));
-      Serial.println(")");
-    }
-  }
-  Serial.println();
+  efeitoStart(true);
+  showDateTime();
   initBlueLeds();
   startBlueLeds();
+  display_cuckoo();
 }
 
 void loop() {
@@ -64,8 +49,9 @@ void loop() {
   server.handleClient();
   // static long mudar = 0;
 
-  // handleDateTimeDisplay();
+  handleDateTimeDisplay();
   // handleLedRing();
+  read_keyb();
 
   // if (millis() - mudar >= 5000) {
   //   //Serial.println("mudar...");
@@ -83,4 +69,22 @@ void initBlueLeds() {
 void startBlueLeds() {
   digitalWrite(BLUE_LED1, HIGH);
   digitalWrite(BLUE_LED2, HIGH);
+}
+
+void read_keyb() {
+  static char flag1 = 0;
+  static long waitTime = 0;
+
+  if (!digitalRead(BT_RESET)) {
+    flag1 = 1;
+  }
+
+  if (digitalRead(BT_RESET) && flag1) {    
+    if (millis() - waitTime >= 5000) {
+      flag1 = 0;
+      delay(130);
+      waitTime = millis();
+      resetNetworkConfig();
+    }     
+  }
 }
