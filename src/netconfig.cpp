@@ -6,6 +6,8 @@ void initNetworkService() {
   WiFiManager wifiManager;
   wifiManager.setConfigPortalTimeout(240);
 
+  Serial.println("Configurando wifi...");
+
   // Cria um access point chamado "nome da rede" e senha "senha"
   if (!wifiManager.autoConnect("ESP_ARDUINOECIA", "arduinoecia")) {
     Serial.println(F("Falha na conexão. Resetar e tentar novamente..."));
@@ -27,13 +29,15 @@ void webServerHandleClient() {}
  void resetNetworkConfig() {
    WiFiManager wifiManager;
 
-   Serial.println(F("Resetando as configurações de rede"));
+   Serial.println(F("Resetando as configurações de rede..."));
 
    // apagar as configurações de conexão na rede Wifi
    wifiManager.resetSettings();
    // Apagar no ESP as configurações de rede Wifi salvas
    ESP.eraseConfig();
    Serial.println(F("Configurações resetadas"));
+   Serial.println(F("Reiniciando o mcu..."));
+   delay(3000);
    // Reiniciar o ESP
    ESP.reset();
  }

@@ -16,8 +16,8 @@ void read_keyb();
 void setup(){
   Serial.begin(115200);
   pinMode(BT_RESET, INPUT_PULLUP);
-  initNeopixel(&pixels);
   initDateTime();
+  initNeopixel(&pixels);
   
   initNetworkService();
 
@@ -47,17 +47,10 @@ void setup(){
 void loop() {
   MDNS.update();
   server.handleClient();
-  // static long mudar = 0;
 
-  handleDateTimeDisplay();
-  // handleLedRing();
+  handleDateTimeDisplay();  
+  //handleLedRing();
   read_keyb();
-
-  // if (millis() - mudar >= 5000) {
-  //   //Serial.println("mudar...");
-  //   mudaEfeito();
-  //   mudar = millis();
-  // }
 }
 
 
@@ -72,19 +65,26 @@ void startBlueLeds() {
 }
 
 void read_keyb() {
-  static char flag1 = 0;
-  static long waitTime = 0;
+  static char flag1 = 0,
+              release_bt = 0;
+  static long timeInMillis = 0;
 
-  if (!digitalRead(BT_RESET)) {
+  if (digitalRead(BT_RESET)) {
     flag1 = 1;
   }
 
-  if (digitalRead(BT_RESET) && flag1) {    
-    if (millis() - waitTime >= 5000) {
-      flag1 = 0;
-      delay(130);
-      waitTime = millis();
+  if (!digitalRead(BT_RESET) && flag1) {
+    flag1 = 0;
+    release_bt = 1;
+    delay(130);
+    timeInMillis = millis();
+  }
+
+  if (digitalRead(BT_RESET) && release_bt) {
+    release_bt = 0;
+    
+    if (millis() - timeInMillis >= 4900) {
       resetNetworkConfig();
-    }     
+    }
   }
 }
