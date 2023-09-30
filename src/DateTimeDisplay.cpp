@@ -87,8 +87,6 @@ void animate() {
 
 void handleDateTimeDisplay() {
   static long dtInstant = 0;
-  int hour, minute;
-  uint8_t colon = 0b01000000;
   static int flag = 0;
 
   if (millis() - dtInstant >= WAIT_CLOCK || dtInstant == 0) {
@@ -96,8 +94,8 @@ void handleDateTimeDisplay() {
     atualizaHora();    
     dtInstant = millis();
 
-    // if (minute == 0 && flag == 0) {
-    if ((timeClient.getSeconds() % 30 == 0) && flag == 0) {
+    // executar animação a cada virada de hora...
+    if (timeClient.getMinutes() == 0 && flag == 0) {    
       flag = 1;
       animate();
     } else {
