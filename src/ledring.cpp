@@ -160,6 +160,12 @@ uint32_t Wheel(byte WheelPos) {
   return ledRing->Color(WheelPos * 3, 255 - WheelPos * 3, 0);
 }
 
+void rainbow5(uint8_t wait) {
+  for (int i = 0; i < 256 * 3; i++) {
+    rainbowCycle(wait);
+  }
+}
+
 // Slightly different, this makes the rainbow equally distributed throughout
 void rainbowCycle(uint8_t wait) {
   uint16_t i;
