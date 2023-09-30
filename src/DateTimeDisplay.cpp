@@ -53,8 +53,7 @@ void initDateTime() {
   display.clear();
   display.setBrightness(2);
   display.setSegments(SEG_INIT);
-  delay(500);
-  //display_cuckoo();
+  delay(50);
 }
 
 void showDateTime() {
@@ -66,24 +65,43 @@ void showDateTime() {
   timeClient.begin();
 }
 
+void atualizaHora() {
+  int hour, minute;
+  uint8_t colon = 0b01000000;
+
+  timeClient.update();
+
+  hour = timeClient.getHours();
+  minute = timeClient.getMinutes();
+
+  display.showNumberDecEx(hour, colon, true, 2, 0);
+  display.showNumberDecEx(minute, colon, true, 2, 2);
+}
+
+void animate() {
+  display_cuckoo();
+  atualizaHora();
+  rainbow5(8);
+  efeitoStart(true);
+}
+
 void handleDateTimeDisplay() {
   static long dtInstant = 0;
   int hour, minute;
   uint8_t colon = 0b01000000;
-  // static bool showColon = false;
+  static int flag = 0;
 
   if (millis() - dtInstant >= WAIT_CLOCK || dtInstant == 0) {
-    // showColon = !showColon;
-    // colon = (showColon? 0b01000000 : 0b00000000);
     
-    timeClient.update();
-    hour = timeClient.getHours();
-    minute = timeClient.getMinutes();
-
-    display.showNumberDecEx(hour, colon, true, 2, 0);
-    display.showNumberDecEx(minute, colon, true, 2, 2);
-    
+    atualizaHora();    
     dtInstant = millis();
-    // Serial.println(timeClient.getFormattedTime()); 
+
+    // if (minute == 0 && flag == 0) {
+    if ((timeClient.getSeconds() % 30 == 0) && flag == 0) {
+      flag = 1;
+      animate();
+    } else {
+      flag = 0;
+    }
   }
 }

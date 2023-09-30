@@ -5,6 +5,7 @@
 #include <NTPClient.h>
 #include <WiFiUdp.h>
 #include <ESP8266WiFi.h>
+#include "ledring.h"
 
 void initDateTime();
 void showDateTime();
