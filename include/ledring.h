@@ -20,6 +20,7 @@
   void mudaEfeito();
   void rainbowCycle(uint8_t wait);
   void efeitoStart(boolean wifiConnection);
+  void rainbow5(uint8_t times);
   //void pulse();
 
 
