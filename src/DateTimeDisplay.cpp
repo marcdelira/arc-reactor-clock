@@ -39,11 +39,11 @@ void display_cuckoo() {
 
   for (int i = 0; i < 88; i+=2) {
     display.showNumberDecEx(i, 0b01000000, true, 2, 0);
-    display.showNumberDecEx(i, 0b01000000, true, 2, 2);
+    display.showNumberDecEx(i, 0b00000000, true, 2, 2);
   }
 
   display.showNumberDecEx(88, 0b01000000, true, 2, 0);
-  display.showNumberDecEx(88, 0b01000000, true, 2, 2);
+  display.showNumberDecEx(88, 0b00000000, true, 2, 2);
   // flash_cuckoo();
   //delay(2000);
 }
@@ -75,31 +75,33 @@ void atualizaHora() {
   minute = timeClient.getMinutes();
 
   display.showNumberDecEx(hour, colon, true, 2, 0);
-  display.showNumberDecEx(minute, colon, true, 2, 2);
+  display.showNumberDecEx(minute, 0b00000000, true, 2, 2);
 }
 
 void animate() {
   display_cuckoo();
   atualizaHora();
-  rainbow5(8);
+  rainbow5(12);
   efeitoStart(true);
 }
 
 void handleDateTimeDisplay() {
   static long dtInstant = 0;
-  static int flag = 0;
+  static char tmFlag = 1;
 
   if (millis() - dtInstant >= WAIT_CLOCK || dtInstant == 0) {
-    
     atualizaHora();    
     dtInstant = millis();
 
-    // executar animação a cada virada de hora...
-    if (timeClient.getMinutes() == 0 && flag == 0) {    
-      flag = 1;
-      animate();
-    } else {
-      flag = 0;
+    // lógica de controle para habilitar a animação de hora em hora...
+    if (!timeClient.getMinutes() == 0) {
+      tmFlag = 1;
     }
+
+    // executar animação a cada virada de hora...
+    if (timeClient.getMinutes() == 0 && tmFlag == 1) {
+      tmFlag = 0;
+      animate();
+    } 
   }
 }
