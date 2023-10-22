@@ -24,6 +24,6 @@ void handleVoiceControl() {
 }
 
 void initVoiceControl() {
-  personalAssistant.addDevice("Reator arc", colorLightChanged, EspalexaDeviceType::color);
+  personalAssistant.addDevice("Luminária", colorLightChanged, EspalexaDeviceType::color);
   personalAssistant.begin();
 }
