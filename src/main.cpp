@@ -1,5 +1,5 @@
 #include "main.h"
-#include <ESP8266mDNS.h>
+// #include <ESP8266mDNS.h>
 
 #define BLUE_LED1 13
 #define BLUE_LED2 15
@@ -7,7 +7,7 @@
 
 Adafruit_NeoPixel pixels = Adafruit_NeoPixel();
 
-ESP8266WebServer server(80);
+// ESP8266WebServer server(80);
 
 void initBlueLeds();
 void startBlueLeds();
@@ -21,35 +21,37 @@ void setup(){
   
   initNetworkService();
 
-  if (!MDNS.begin("wemos")) {
-    Serial.println("Erro na configuração do MDNS");
-  }
+  // if (!MDNS.begin("wemos")) {
+  //   Serial.println("Erro na configuração do MDNS");
+  // }
 
-  Serial.println("mDNS responder started");
-  server.begin();
+  // Serial.println("mDNS responder started");
+  // server.begin();
 
-  MDNS.addService("http", "tcp", 80);
+  // MDNS.addService("http", "tcp", 80);
 
-  server.on("/", 
-    HTTP_GET,
-    []() {
-      server.send(200, F("text/html"),
-      F("Welcome to the Rest Web Server!"));
-    });
+  // server.on("/", 
+  //   HTTP_GET,
+  //   []() {
+  //     server.send(200, F("text/html"),
+  //     F("Welcome to the Rest Web Server!"));
+  //   });
   
   efeitoStart(true);
   showDateTime();
   initBlueLeds();
   startBlueLeds();
   display_cuckoo();
+  initFileConfig();
+  initVoiceControl();
 }
 
 void loop() {
-  MDNS.update();
-  server.handleClient();
+  // MDNS.update();
+  // server.handleClient();
 
   handleDateTimeDisplay();  
-  //handleLedRing();
+  handleVoiceControl();
   read_keyb();
 }
 

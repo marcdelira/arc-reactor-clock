@@ -6,5 +6,7 @@
   #include "ledring.h"
   #include "netconfig.h"
   // #include "webserver.h"
+  #include "fileconfig.h"
+  #include "voicecontrol.h"
 
 #endif //MAIN_h

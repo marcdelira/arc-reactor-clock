@@ -12,7 +12,7 @@ bool habilitaEfeitoHeartBeat = false;
 void efeitoStart(boolean wifiConnection) {
   uint32_t colorLed = 0;
 
-  colorLed = (wifiConnection ? ledRing->Color(0, 20, 255) : ledRing->Color(255, 20, 0));
+  colorLed = (wifiConnection ? ledRing->Color(0, 20, 150) : ledRing->Color(255, 20, 0));
 
   for(int i=0; i<35;i++){
     ledRing->setPixelColor(i, colorLed);
@@ -211,4 +211,13 @@ void handleLedRing() {
 void printEfeitoSelecionado() {
   Serial.print("efeitoSelecionado: ");
   Serial.println(efeitoSelecionado);
+}
+
+void ajustarBrilhoCor(uint8_t brilho, uint32_t ledColor) {
+
+  ledRing->setBrightness(brilho);
+  for (int i = 0; i < ledRing->numPixels(); i++) {
+    ledRing->setPixelColor(i, ledColor);
+  }
+  ledRing->show();
 }

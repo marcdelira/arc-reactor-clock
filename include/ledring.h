@@ -22,6 +22,7 @@
   void efeitoStart(boolean wifiConnection);
   void rainbow5(uint8_t times);
   //void pulse();
+  void ajustarBrilhoCor(uint8_t brilho, uint32_t ledColor);
 
 
 #endif //LEDRING_H
