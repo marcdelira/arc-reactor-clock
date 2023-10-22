@@ -9,7 +9,7 @@ void initNetworkService() {
   Serial.println("Configurando wifi...");
 
   // Cria um access point chamado "nome da rede" e senha "senha"
-  if (!wifiManager.autoConnect("ESP_ARDUINOECIA", "arduinoecia")) {
+  if (!wifiManager.autoConnect("ILUMINATODECOR", "321iluminar")) {
     Serial.println(F("Falha na conexão. Resetar e tentar novamente..."));
     delay(3000);
     ESP.restart();
@@ -37,7 +37,7 @@ void webServerHandleClient() {}
    ESP.eraseConfig();
    Serial.println(F("Configurações resetadas"));
    Serial.println(F("Reiniciando o mcu..."));
-   delay(3000);
+   delay(1000);
    // Reiniciar o ESP
    ESP.reset();
  }
